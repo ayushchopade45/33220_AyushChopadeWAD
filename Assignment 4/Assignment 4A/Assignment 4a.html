@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Swipe and Tap Events</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <style>
+        body {
+            font-family: 'Helvetica', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            text-align: center;
+        }
+        #page1 {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #page1 .ui-header,
+        #page1 .ui-footer {
+            background-color: #3498db;
+            color: #fff;
+            text-shadow: none;
+            border: none;
+        }
+        #page1 .ui-content {
+            padding: 20px;
+            transition: background-color 0.3s ease; /* Smooth transition for background color changes */
+        }
+        p {
+            font-size: 18px;
+            color: #333;
+        }
+        span {
+            color: #e67e22;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        $(document).on("pagecreate", "#page1", function () {
+            let tapCounter = 0;
+            let swipeLeftCounter = 0;
+            let swipeRightCounter = 0;
+            let swipeUpCounter = 0;
+            let swipeDownCounter = 0;
+
+            // Swipe left event handling
+            $("body").on("swipeleft", function () {
+                swipeLeftCounter++;
+                updateContent(`Swiped left! Left Count: ${swipeLeftCounter}`, getRandomColor());
+            });
+
+            // Swipe right event handling
+            $("body").on("swiperight", function () {
+                swipeRightCounter++;
+                updateContent(`Swiped right! Right Count: ${swipeRightCounter}`, getRandomColor());
+            });
+
+            // Swipe up event handling
+            $("body").on("swipeup", function () {
+                swipeUpCounter++;
+                updateContent(`Swiped up! Up Count: ${swipeUpCounter}`, getRandomColor());
+            });
+
+            // Swipe down event handling
+            $("body").on("swipedown", function () {
+                swipeDownCounter++;
+                updateContent(`Swiped down! Down Count: ${swipeDownCounter}`, getRandomColor());
+            });
+
+            // Tap event handling
+            $("body").on("tap", function () {
+                tapCounter++;
+                updateContent(`Tapped! Total Count: ${tapCounter}`, getRandomColor());
+            });
+
+            // Function to update page content and background color
+            function updateContent(message, color) {
+                $("p").text(message);
+                $("#page1 .ui-content").css("background-color", color);
+                $("span").html("<span class='arrow'>&#x2192;</span>"); // Right arrow symbol
+            }
+
+            // Function to generate a random color
+            function getRandomColor() {
+                const letters = "0123456789ABCDEF";
+                let color = "#";
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+        });
+    </script>
+</head>
+<body>
+    <div data-role="page" id="page1">
+        <div data-role="header">
+            <h2>Header</h2>
+        </div>
+        <div data-role="main" class="ui-content">
+            <p>Swipe left, swipe right, swipe up, swipe down, or tap to see the events and change background color.</p>
+            <span></span>
+        </div>
+        <div data-role="footer">
+            <h2>Footer</h2>
+        </div>
+    </div>
+</body>
+</html>
